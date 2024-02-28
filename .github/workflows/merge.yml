@@ -5,10 +5,21 @@ on:
     branches:
       - staging
 
+env:
+    GIT_USER_EMAIL: sosn3@naver.com
+    GIT_USER_NAME: pss89
+
 jobs:
   merge_to_main:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
+      - name: Set Git config
+        run: |
+          git config --global user.email "${GIT_USER_EMAIL}"
+          git config --global user.name "${GIT_USER_NAME}"
+
       - name: Checkout main branch
         uses: actions/checkout@v2
         with:
