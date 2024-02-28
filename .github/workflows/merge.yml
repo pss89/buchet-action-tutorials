@@ -1,0 +1,25 @@
+name: Auto Merge to Main
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  merge_to_main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v2
+        with:
+          ref: 'main'
+          fetch-depth: 0
+
+      - name: Merge staging into main
+        run: git merge --no-ff origin/staging -m "Auto-merge staging to main"
+
+      - name: Push changes to main
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
